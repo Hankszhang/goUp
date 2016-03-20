@@ -1,0 +1,57 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <style>
+ul.nav{
+    margin: 0;
+    padding: 0;
+    /*清除默认项目符号*/
+    list-style-type: none;
+    width: 8em;
+    background-color: #8bd400;
+    border: 1px solid #486b02;
+}
+ul.nav a{
+    text-decoration: none;
+    display: block;
+    color: #2b3f00;
+    border-top: 1px solid #e4ffd3;
+    border-bottom: 1px solid #486b02;
+    padding: 0.3em 1.5em;
+}
+ul.nav a:last-child{
+    border-bottom: 0;
+}
+ul li{
+    position: relative;
+}
+ul.nav a:before{
+    content: '';
+    width: 0;
+    height: 0;
+    border: 6px solid;
+    border-color: transparent transparent transparent red;
+    position: absolute;
+    top: 50%;
+    margin-top: -6px;
+    margin-left: -1em;
+}
+ul.nav a:hover, 
+ul.nav a:focus{
+    color: #e4ffd3;
+    background-color: #6da203;
+}
+        </style>
+    </head>
+    <body>
+        <ul class="nav">
+            <li><a href="#">Home</a></li>
+            <li><a href="#">About</a></li>
+            <li><a href="#">Service</a></li>
+            <li><a href="#">Work</a></li>
+            <li><a href="#">News</a></li>
+            <li><a href="#">Contacts</a></li>
+        </ul>
+</body>
+</html>
