@@ -1,0 +1,26 @@
+[
+  {
+    "name": "test1",
+    "passwordHash": "1drowssap",
+    "token": {
+      "invalidated": false,
+      "expiry": 1650709160
+    }
+  },
+  {
+    "name": "test2",
+    "passwordHash": "2drowssap",
+    "token": {
+      "invalidated": false,
+      "expiry": 1145141919
+    }
+  },
+  {
+    "name": "test3",
+    "passwordHash": "3drowssap",
+    "token": {
+      "invalidated": true,
+      "expiry": 1650709160
+    }
+  }
+]
