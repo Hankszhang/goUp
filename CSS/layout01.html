@@ -1,0 +1,79 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>This is a layout test</title>
+    </head>
+    <body>
+<style>
+*{
+    margin:0;
+    padding:0;
+}
+#main{
+    width: auto;
+    height: 100%;
+    min-height: 100%;
+    position: relative;
+    padding:5px;
+}
+#header{
+    width: auto;
+    border: 2px solid green;
+    padding: 5px;
+    position: relative;
+    overflow: hidden;
+}
+#logo{
+    width: 50px;
+    height: 50px;
+    float: left;
+    border: 2px solid red;
+}
+#input{
+    height: 1.5em;
+    border: 1px solid black;
+    text-align: right;
+    /*将input定位在header的右下角*/
+    position: absolute;
+    margin: 5px;
+    bottom: 0;
+    right: 0;
+}
+#container{
+    overflow: hidden;
+    padding: 5px 0;
+}
+#aside{
+    float: right;
+    width: 200px;
+    height: 100%;
+    border: 2px solid red;
+    margin-left: 20px;
+}
+#content{
+    height: 500px;
+    border: 3px solid blue;
+    /*将content设置为BFC，防止float元素aside覆盖*/
+    overflow: hidden;
+}
+#footer{
+    text-align: center;
+    border: 2px solid grey;
+    margin: 0 5px;
+}
+</style>
+        <div id="main">
+            <div id="header">
+                <div id="logo">Logo</div>
+                <input id="input" value="用户名" type="text"></input>
+            </div>
+            <div id="container">
+                <!--这里aside必须放在content前面，否则aside会在下面浮动-->
+                <div id="aside">aside - 定宽200px</div>
+                <div id="content">content - 自适应宽度</div>
+            </div>
+        </div>
+        <div id="footer">footer</div>
+    </body>
+</html>
