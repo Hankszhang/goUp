@@ -12,6 +12,7 @@
  * Date: 2016-04-05T19:16Z
  */
 
+//封装jQuery，同时兼容Node.js模块导入
 (function( global, factory ) {
 
 	if ( typeof module === "object" && typeof module.exports === "object" ) {
@@ -34,6 +35,7 @@
 		factory( global );
 	}
 
+//通过传入window对象，可以使window对象变为局部变量，可以缩短作用域链
 // Pass this if window is not defined yet
 }(typeof window !== "undefined" ? window : this, function( window, noGlobal ) {
 
@@ -77,6 +79,7 @@ var
 
 	// Support: Android<4.1, IE<9
 	// Make sure we trim BOM and NBSP
+    // \uFEFF 表示字节序标记，\xA0表示不换行的空格代码（NBSP）
 	rtrim = /^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g,
 
 	// Matches dashed string for camelizing
@@ -10976,6 +10979,7 @@ jQuery.fn.andSelf = jQuery.fn.addBack;
 // AMD loader is present. jQuery is a special case. For more information, see
 // https://github.com/jrburke/requirejs/wiki/Updating-existing-libraries#wiki-anon
 
+//按照AMD规范注册jQuery模块
 if ( typeof define === "function" && define.amd ) {
 	define( "jquery", [], function() {
 		return jQuery;
@@ -10985,7 +10989,8 @@ if ( typeof define === "function" && define.amd ) {
 
 
 var
-
+    //通过两个私有变量将window环境下已有的jQuery和$保存
+    //防止被jQuery环境下的同名变量覆盖
 	// Map over jQuery in case of overwrite
 	_jQuery = window.jQuery,
 
@@ -10993,10 +10998,12 @@ var
 	_$ = window.$;
 
 jQuery.noConflict = function( deep ) {
+    //让渡$对jQuery的控制权,将该变量交给上一个实现它的类库
 	if ( window.$ === jQuery ) {
 		window.$ = _$;
 	}
 
+    //若deep为true，则将jQuery的控制权也让渡出来
 	if ( deep && window.jQuery === jQuery ) {
 		window.jQuery = _jQuery;
 	}
