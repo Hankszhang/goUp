@@ -13,31 +13,31 @@
  */
 
 //封装jQuery，同时兼容Node.js模块导入
-(function( global, factory ) {
+(function( global, factory ) {//{{{
 
-	if ( typeof module === "object" && typeof module.exports === "object" ) {
-		// For CommonJS and CommonJS-like environments where a proper `window`
-		// is present, execute the factory and get jQuery.
-		// For environments that do not have a `window` with a `document`
-		// (such as Node.js), expose a factory as module.exports.
-		// This accentuates the need for the creation of a real `window`.
-		// e.g. var jQuery = require("jquery")(window);
-		// See ticket #14549 for more info.
-		module.exports = global.document ?
-			factory( global, true ) :
-			function( w ) {
-				if ( !w.document ) {
-					throw new Error( "jQuery requires a window with a document" );
-				}
-				return factory( w );
-			};
-	} else {
-		factory( global );
-	}
+    if ( typeof module === "object" && typeof module.exports === "object" ) {
+        // For CommonJS and CommonJS-like environments where a proper `window`
+        // is present, execute the factory and get jQuery.
+        // For environments that do not have a `window` with a `document`
+        // (such as Node.js), expose a factory as module.exports.
+        // This accentuates the need for the creation of a real `window`.
+        // e.g. var jQuery = require("jquery")(window);
+        // See ticket #14549 for more info.
+        module.exports = global.document ?
+            factory( global, true ) :
+                function( w ) {
+                    if ( !w.document ) {
+                        throw new Error( "jQuery requires a window with a document" );
+                    }
+                    return factory( w );
+                };
+    } else {
+        factory( global );
+    }
 
-//通过传入window对象，可以使window对象变为局部变量，可以缩短作用域链
-// Pass this if window is not defined yet
-}(typeof window !== "undefined" ? window : this, function( window, noGlobal ) {
+    //通过传入window对象，可以使window对象变为局部变量，可以缩短作用域链
+    // Pass this if window is not defined yet
+}(typeof window !== "undefined" ? window : this, function( window, noGlobal ) {//}}}
 
 // Support: Firefox 18+
 // Can't be in strict mode, several libs including ASP.NET trace
@@ -74,6 +74,7 @@ var
 
 		// The jQuery object is actually just the init constructor 'enhanced'
 		// Need init if jQuery is called (just allow error to be thrown if not included)
+        // jQuery函数返回的是一个jQuery对象
 		return new jQuery.fn.init( selector, context );
 	},
 

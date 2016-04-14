@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>A Sample with Canvas</title>
+    <!--[if lt IE 9] >
+        <script src="excanvas.js"></script>
+    <![endif] -->
+<style>
+*{
+    margin: 0;
+    padding: 0;
+}
+canvas {
+    display: block;
+    background: #000;
+    margin: 0 auto;
+}
+</style>
+
+<script>
+window.onload = function(){
+    var canvas = document.getElementById("earth");
+    //Set the size of canvas
+    canvas.height = 600;
+    canvas.width = 600;
+    if(canvas.getContext){
+        var ctx = canvas.getContext('2d');
+        //draw the orbit.
+        ctx.strokeStyle = "white";
+        function drawOrbit(){
+            for(var i=0; i<8;i++){
+                ctx.beginPath();
+                ctx.arc(300, 300, 30*(i+1), 0, Math.PI*2, false);
+                ctx.stroke();
+            }
+        };
+        drawOrbit();
+        // draw the stars with given params
+        function Star(x,y,radius,period,sColor,eColor){
+            //coordinate of the original point
+            this.x = x;
+            this.y = y;
+            //radius
+            this.radius =  radius;
+            //orbital period
+            this.period = period;
+            // the color of star: startColor and endColor
+            this.sColor = sColor;
+            this.eColor = eColor;
+            //set a timer
+            this.timer = 0;
+            //draw the star
+        }
+        //旋转的主要原理：
+        //从内到外依次向画布上添加填充圆，画圆前先将之前的画布保存，
+        //并根据每个星球的公转周期以及当前计时器的值，计算出画该星球前 画布应旋转的角度，
+        //画好该星球后将保存的画布内容恢复,然后计时器加一
+        //最后通过定时器来循环，产生动画效果
+        Star.prototype.draw = function(){
+            // save the previous content
+            ctx.save();
+            //reset the original point
+            ctx.translate(300, 300);
+            ctx.rotate(this.timer*(360/this.period)*Math.PI/180);
+            //draw the cirle at its orbit
+            ctx.beginPath();
+            ctx.arc(this.x, this.y, this.radius, 0, 360, false);
+            ctx.closePath();
+            //draw the color for the star
+            var color = ctx.createRadialGradient(this.x,this.y,0,this.x,this.y,this.radius);
+            color.addColorStop(0, this.sColor);
+            color.addColorStop(1, this.eColor);
+            ctx.fillStyle = color;
+            ctx.fill();
+            //restore previous content
+            ctx.restore();
+            this.timer += 1;
+        }
+        //create the instances of stars
+        var sun = new Star(0,0,15,0,"#ffff00","#ff9900"),
+            mercury = new Star(30,0,8,87.7,"#a69697","#5c3e40"),
+            venus = new Star(60,0,8,224.7,"#c4bbac","#1f1315"),
+            earth = new Star(90,0,8,365.5,"#78B1E8","#050c12"),
+            mars = new Star(120,0,8,686.98,"#CEC9B6","#76422d"),
+            jupiter = new Star(150,0,8,4332.589,"#c0a48e","#322222"),
+            saturn = new Star(180,0,8,10759.5,"#f7f9e3","#5c4533"),
+            uranus = new Star(210,0,8,30799.095,"#a7e1e5","#19243a"),
+            neptune = new Star(240,0,8,60152,"#0661b2","#1e3b73");
+        setInterval(function(){
+            ctx.clearRect(0,0,600,600);
+            drawOrbit();
+            sun.draw();
+            mercury.draw();
+            venus.draw();
+            earth.draw();
+            mars.draw();
+            jupiter.draw();
+            saturn.draw();
+            uranus.draw();
+            neptune.draw();
+        }, 10);
+    }
+};
+</script>
+</head>
+<body>
+    <canvas id="earth">
+        Sorry, your brower doesn't support Canvas.
+    </canvas>
+</body>
+</html>
