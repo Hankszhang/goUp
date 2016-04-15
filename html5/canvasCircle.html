@@ -35,8 +35,7 @@ window.onload = function(){
                 ctx.stroke();
             }
         };
-        drawOrbit();
-        // draw the stars with given params
+        drawOrbit(); // draw the stars with given params
         function Star(x,y,radius,period,sColor,eColor){
             //coordinate of the original point
             this.x = x;
@@ -62,7 +61,7 @@ window.onload = function(){
             ctx.save();
             //reset the original point
             ctx.translate(300, 300);
-            ctx.rotate(this.timer*(360/this.period)*Math.PI/180);
+            ctx.rotate(-this.timer*(360/this.period)*Math.PI/180);
             //draw the cirle at its orbit
             ctx.beginPath();
             ctx.arc(this.x, this.y, this.radius, 0, 360, false);
