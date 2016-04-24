@@ -1,6 +1,7 @@
 //define the List datastructure.
 //last-modified: 2016-4-24
 //Author: Hanks
+//the differences between List and array.
 
 function List(){
     this.listSize = 0;
@@ -27,7 +28,7 @@ List.prototype = {
         return false;
     },
     //获取列表长度
-    length: function(){
+    getLength: function(){
         return this.listSize;
     },
     //显示列表中的元素
@@ -82,15 +83,83 @@ List.prototype = {
         return this.dataStore[this.pos];
     }
 }
-/*
-//test case
-var names = new List();
-names.append("Cynthia");
-names.append("Raymond");
-names.append("Barbara");
-print(names.moveTo(2));
-print(names.toString());
-names.remove("Raymond");
-print(names.toString());
-*/
 
+//test case
+//var names = new List();
+//names.append("Cynthia");
+//names.append("Raymond");
+//names.append("Barbara");
+//print(names.toString());
+//print(names.moveTo(2));
+//names.remove("Raymond");
+//print(names.toString());
+
+
+// Film rent system
+// read data from disk
+function readFilm(file){
+    var arr = read(file).split("\n");
+    for(var i=0;i<arr.length;i++){
+        arr[i] = arr[i].trim();
+    }
+    return arr;
+}
+//Customer Class
+function Customer(name, movie){
+    this.name = name;
+    this.movie = movie;
+}
+
+// display the movies list and customer list.
+function display(list){
+    for(list.front();list.currPos()<list.getLength();list.next()){
+        if(list.getElement() instanceof Customer){
+            print(list.getElement()["name"] + ", " + list.getElement()["movie"]);
+        }else{
+            print(list.getElement());
+        }
+    }
+}
+
+// check out whether a movie can be rent by a user.
+function checkOut(name, movie, movieList, customerList){
+    if(movieList.contains(movie)){
+        var c = new Customer(name, movie);
+        customerList.append(c);
+        movieList.remove(movie);
+        rentMovieList.append(movie);
+        print("Rent Movie List:" + rentMovieList.toString());
+    }else{
+        print(movie + "is not avilable!")
+    }
+}
+
+function checkIn(movie, movieList, customerList){
+    if(rentMovieList.contains(movie)){
+        rentMovieList.remove(movie);
+        movieList.append(movie);
+    }
+}
+var movies = readFilm("films.txt"),
+    movieList = new List(),
+    customerList = new List(),
+    rentMovieList = new List();
+for(var i=0; i<movies.length;i++){
+    movieList.append(movies[i]);
+}
+print("Available movies:\n");
+display(movieList);
+putstr("\nEnter your name:\t");
+var name = readline();
+putstr("Which Moive would you like?\t");
+var movie = readline();
+checkOut(name, movie, movieList, customerList);
+print("\nCustomer Rental:");
+display(customerList);
+print("\nMovies now available\n");
+display(movieList);
+putstr("Which Moive would you like to give back?\t");
+var movie = readline();
+checkIn(movie, movieList, customerList);
+print("\nMovies now available\n");
+display(movieList);
