@@ -140,7 +140,7 @@ function checkIn(movie, movieList, customerList){
         movieList.append(movie);
     }
 }
-var movies = readFilm("films.txt"),
+var movies = readFilm("files/films.txt"),
     movieList = new List(),
     customerList = new List(),
     rentMovieList = new List();
