@@ -43,7 +43,7 @@ function display(){
 //找到待删除节点的上一个节点
 function findPrevious(item){
     var currNode = this.head;
-    while(currNode !== null && currNode.next.element != item){
+    while(currNode.next !== null && currNode.next.element != item){
         currNode = currNode.next;
     }
     return currNode;
@@ -56,7 +56,7 @@ function remove(item){
 }
 
 // Test Case
-var cities = new LinkedList();
+/*var cities = new LinkedList();
 cities.insertAfter("head", "Conway");
 cities.insertAfter("Conway", "Russellville");
 cities.insertAfter("Russellville", "Carlisle");
@@ -64,4 +64,44 @@ cities.insertAfter("Carlisle", "Alma");
 cities.display();
 console.log();
 cities.remove("Carlisle");
-cities.display();
+cities.display();*/
+
+//循环链表
+function LoopLList(){
+    this.head = new Node("head");
+    this.head.next = this.head;
+    this.find = find;
+    this.findPrevious = findPrevious;
+    this.insertAfter = insertAfter;
+    this.remove = remove;
+    this.display = display;
+}
+
+function find(item){
+    var currNode = this.head;
+    while(currNode.next !== "head" && currNode.element != item){
+        currNode = currNode.next;
+    }
+    return currNode;
+}
+
+function insertAfter(item, newElement){
+    var newNode = new Node(newElement);
+    var currNode = this.find(item);
+    newNode.next = currNode.next;
+    currNode.next = newNode;
+}
+//找到待删除节点的上一个节点
+function findPrevious(item){
+    var currNode = this.head;
+    while(currNode.next.element !== "head" && currNode.next.element != item){
+        currNode = currNode.next;
+    }
+    return currNode;
+}
+
+function remove(item){
+    var prevNode = this.findPrevious(item);
+    //将带删除元素的next指向呆删除元素的下一个元素
+    prevNode.next = prevNode.next.next;    
+}
