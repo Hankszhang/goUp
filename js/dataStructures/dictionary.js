@@ -58,3 +58,53 @@ pbook.showAll();
 pbook.clear();
 print("Number of entries: " + pbook.count());*/
 
+// Phonebook Example
+function Phonebook(){
+    this.data = new Dictionary();
+}
+Phonebook.prototype = {
+    addPhone: function(name, phone){
+        this.data.add(name, phone);
+    },
+    deleteOne: function(name){
+        this.data.remove(name); 
+    },
+    showOne: function(name){
+        print(name + "'s phone number: " + this.data.find(name));
+    },
+    show: function(){
+        print("The phonebook contains " + this.data.count() + " items:");
+        this.data.showAll();
+    },
+    clearAll: function(){
+        this.data.clear();
+        print("All infomation cleared!");
+    }
+}
+function readData(file){
+    var arr = read(file).split("\n"),
+        data = new Dictionary();
+    for(var i=0;i<arr.length-1;i++){
+        var info = arr[i].split(" ");
+        data.add(info[0], info[1]);
+    }
+    return data;
+}
+var phonebook = new Phonebook();
+phonebook.data = readData("files/info.txt");
+print("All infomation:")
+phonebook.show();
+putstr("\nEnter your name: ");
+var name = readline();
+putstr("\nEnter your phone number: ");
+var phone = readline();
+phonebook.addPhone(name, phone);
+phonebook.show();
+putstr("\nEnter the name you want to delete: ");
+var name = readline();
+phonebook.deleteOne(name);
+phonebook.show();
+putstr("\nEnter the name you want to find: ");
+var name = readline();
+phonebook.showOne(name);
+phonebook.clearAll();
