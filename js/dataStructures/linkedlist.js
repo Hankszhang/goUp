@@ -7,7 +7,7 @@ function Node(element){
     this.element = element;
     this.next = null;
 }
-
+/*
 function LinkedList(){
     this.head = new Node("head");
     this.find = find;
@@ -56,7 +56,7 @@ function remove(item){
 }
 
 // Test Case
-/*var cities = new LinkedList();
+var cities = new LinkedList();
 cities.insertAfter("head", "Conway");
 cities.insertAfter("Conway", "Russellville");
 cities.insertAfter("Russellville", "Carlisle");
@@ -74,7 +74,6 @@ function LoopLList(){
     this.findPrevious = findPrevious;
     this.insertAfter = insertAfter;
     this.remove = remove;
-    this.display = display;
 }
 
 function find(item){
@@ -105,3 +104,33 @@ function remove(item){
     //将带删除元素的next指向呆删除元素的下一个元素
     prevNode.next = prevNode.next.next;    
 }
+
+// Solve Joseph Problem with LoopLList.
+function kill(n, m){
+    var people = new LoopLList();
+    people.insertAfter("head", "2");
+    for(var i=3;i<=n;i++){
+        people.insertAfter((i-1).toString(), i.toString());
+    }
+    var counter = 1;
+    var currNode = people.head;
+    while(m != counter && n >= m){
+        currNode = currNode.next;
+        counter++;
+        if(counter == m){
+            print(currNode.element + " is killed!");
+            people.remove(currNode.element);
+            n--;
+            currNode = currNode.next;
+            counter = 1;
+        }
+    }
+    print("The left man are:")
+    while(n>0){
+        print(currNode.element);
+        currNode = currNode.next;
+        n--;
+    }
+}
+
+kill(40,3);
