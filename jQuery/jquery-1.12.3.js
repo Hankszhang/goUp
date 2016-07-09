@@ -276,6 +276,7 @@
             throw new Error(msg);
         },
 
+        // 表示一个空函数，可作为可选回调函数的默认值
         noop: function() {},
 
         // See test/unit/core.js for details concerning isFunction.
@@ -679,6 +680,7 @@
                 // Regular expressions
 
                 // http://www.w3.org/TR/css3-selectors/#whitespace
+                // 表示空白的字符集
                 whitespace = "[\\x20\\t\\r\\n\\f]",
 
                 // http://www.w3.org/TR/CSS21/syndata.html#value-def-identifier
