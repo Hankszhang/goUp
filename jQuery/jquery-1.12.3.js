@@ -678,6 +678,7 @@
                 booleans = "checked|selected|async|autofocus|autoplay|controls|defer|disabled|hidden|ismap|loop|multiple|open|readonly|required|scoped",
 
                 // Regular expressions
+                // 用于正则表达式的先关变量
 
                 // http://www.w3.org/TR/css3-selectors/#whitespace
                 // 表示空白的字符集
