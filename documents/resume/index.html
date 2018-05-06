@@ -1,0 +1,118 @@
+<!doctype html>
+<html>
+
+<head>
+  <meta charset='UTF-8'>
+  <meta name='viewport' content='width=device-width initial-scale=1'>
+  <title>index</title>
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.12/css/all.css" integrity="sha384-G0fIWCsCzJIMAVNQPfjH08cyYaUtMwjJwqiRKxxE/rx96Uroj1BtIQ6MLJuheaO9"
+    crossorigin="anonymous">
+  <style type='text/css'>
+  body {
+      font-family: "Apple LiGothic Medium", Helvetica, "Apple LiGothic Medium", Arial, sans-serif;
+      color: #1e2330;
+      line-height: 18px;
+      margin: 5px 20px;
+  }
+  .fas,
+  .fab {
+    margin-right: 5px;
+    width: 18px;
+  }
+  .name {
+    margin-top: 5px;
+  }
+
+  .info-item {
+    margin-top: 5px;
+  }
+
+  hr {
+    border: none;
+    border-bottom: 2px solid #a8abb3;
+  }
+
+  ul li {
+    list-style: none;
+    margin: 5px 0 5px -20px;
+  }
+  .job-item {
+    font-weight: bold;
+    margin: 10px 0;
+  }
+  .edu-item,
+  .job-item {
+    display: flex;
+    justify-content: space-between;
+  }
+  .edu-item span,
+  .job-item span {
+    flex: 1;
+  }
+  .edu-item span:last-child,
+  .job-item span:last-child {
+    text-align: right;
+  }
+  </style>
+</head>
+
+<body>
+  <h1 class="name"><i class="fas fa-male"></i>张光汉</h1>
+  <hr />
+  <div class="info-item"><i class="fas fa-phone-square"></i>电话：18521006165</div>
+  <div class="info-item"><i class="fas fa-envelope-square"></i>邮箱：hankszhang@foxmail.com</div>
+  <div class="info-item"><i class="fab fa-blogger"></i>博客：https://hankszhang.github.io</div>
+  <hr />
+  <h3><i class="fas fa-bookmark"></i>教育经历</h3>
+  <ul>
+    <li class="edu-item">
+      <span><i class="fas fa-university"></i><strong>上海交通大学</strong></span>
+      <span>工学硕士</span>
+      <span>生物医学工程</span>
+      <span>2014.09 - 2017.03</span>
+    </li>
+    <li class="edu-item">
+      <span><i class="fas fa-graduation-cap"></i><strong>华中科技大学</strong></span>
+      <span>工学学士</span>
+      <span>生物医学工程</span>
+      <span>2010.09 - 2014.06</span>
+    </li>
+  </ul>
+  <hr />
+  <h3><i class="fas fa-bookmark"></i>专业技能</h3>
+  <ul>
+    <li><i class="fab fa-js-square"></i>熟练掌握JavsScript/ES6/TpyeScript、HTML、CSS等web前端核心技术</li>
+    <li><i class="fab fa-vuejs"></i>熟练使用Vue全家桶开发UI组件和SPA</li>
+    <li><i class="fas fa-lightbulb"></i>熟练使用RxJS开发web应用的数据层</li>
+    <li><i class="fas fa-cubes"></i>熟悉模块化，熟练使用前端编译和构建工具，如：grunt/gulp/webpack</li>
+    <li><i class="fab fa-node"></i>熟悉Node.js web应用开发</li>
+  </ul>
+  <hr />
+  <h3><i class="fas fa-bookmark"></i>工作经历</h3>
+  <div class="company"><i class="fab fa-qq"></i>腾讯科技（上海）有限公司</div>
+  <p class="job-item">
+    <span>web前端开发工程师</span>
+    <span>2017.04 - 至今</span>
+  </p>
+  <ul>
+    <li><i class="fas fa-thumbtack"></i>VHTML组件库：基于Vue2.0开发的前端UI组件库，已公司内部开源。主要负责开发了radio、checkbox、rate、select-list、dragarea、pagination等组件。</li>
+    <li><i class="fas fa-thumbtack"></i>企点融合工作台：采用Typescript + Vue（视图层）+ RxJS（数据层）的方案开发前端内嵌页。小组在零经验的情况下快速摸索出基于RxJS开发数据层的最佳实践方案——DASS。前期主要负责主沟通区域模块和客户库模块的开发，后期还负责重构了项目中部分代码。期间在组内做了两次分享，产出了2篇文章。</li>
+    <li><i class="fas fa-thumbtack"></i>企点官网：主导了官网项目的前端构建改造，快速熟悉了基于gulp的前端构建流程，并运用到官网上。这大大提高了官网的开发效率，实现了页面模块分离及复用。</li>
+    <li><i class="fas fa-thumbtack"></i>代码规范化：使用node script和git hook实现了代码eslint验证、commit校验及auto fix等功能，从流程上确保了项目中代码的规范性</li>
+    <li><i class="fas fa-star"></i>绩效：2017年下半年获得五星绩效</li>
+  </ul>
+  <hr />
+  <h3><i class="fas fa-bookmark"></i>实习经历</h3>
+  <div class="company"><i class="fab fa-qq"></i>腾讯科技（上海）有限公司</div>
+  <p class="job-item">
+    <span>web前端开发实习生</span>
+    <span>2016.05 - 2017.03</span>
+  </p>
+  <ul>
+    <li><i class="fas fa-thumbtack"></i>企点分析：基于jQuery+backbone+LBF体系开发前端页面，主要负责开发数据图表相关的业务模块。</li>
+    <li><i class="fas fa-thumbtack"></i>shtml组件库：基于jQuery+Virtual Dom实现的UI组件库，主要开发了tag、progressbar、chartTab、dateTab等业务组件。</li>
+    <li><i class="fas fa-book"></i>学习：实习期间整理翻译了《You don&#39;t know JS》系列的上半部，已托管在<a href='https://legacy.gitbook.com/book/hankszhang/you-dont-know-js/details'>Gitbook</a>上，获得了一定的关注。</li>
+  </ul>
+</body>
+
+</html>
