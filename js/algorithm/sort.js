@@ -1,75 +1,83 @@
 // Serveral kinds of sort-algorithm
-// 2016-05-05
+// 2018-05-13
 
-load('files/cArray.js')
-// 冒泡排序
-function bubbleSort(array){
-    var count = 0;
-    var numElements = array.length;
-    for(var i=numElements-1; i>=2; i--){
-        for(var j=0; j<=i; j++){
-            if(array[j]>array[j+1]){
-                swap(array, j, j+1);
+// utils
+function swap (array, index1, index2) {
+    let temp = array[index1];
+    array[index1] = array[index2];
+    array[index2] = temp;
+};
+
+function print (string) {
+    console.log(string);
+}
+
+
+// 冒泡排序，时间复杂度为O(n^2)，最好为O(n)
+function bubbleSort(array) {
+    let length = array.length;
+    for (let i = length - 1; i >= 2; i--) {
+        for (let j = 0; j <= i; j++) {
+            if (array[j] > array[j + 1]) {
+                swap(array, j, j + 1);
             }
         }
-        //count++;
-        //print("Step " + count + ": " + array);
     }
 }
 
-//选择排序
+//选择排序，时间复杂度为O(n^2)
 function selectionSort(array){
-    var count = 0;
-    for(var i=0; i<array.length-1; i++){
-        var min = i;
-        for(var j=i+1; j<array.length; j++){
+    for(let i = 0; i < array.length - 1; i++){
+        let min = i;
+        for(let j = i + 1; j < array.length; j++){
             if(array[j] < array[min]){
                 min = j;
             }
         }
-        swap(array, i, min);
-        //count++;
-        //print("Step " + count + ": " + array);
+        if (array[i] !== array[min]) {
+            swap(array, i, min);
+        }
     }
 }
 
-//插入排序
+//插入排序，时间复杂度为O(n^2)，最好为O(n)
 function insertionSort(array){
-    var count = 0;
-    for(var outer=1; outer<array.length-1; outer++){
-        var temp = array[outer];
-        var inner = outer;
-        //将比当前元素大元素向后移一位
-        while(inner>0 && (array[inner-1]>=temp)){
-            array[inner] = array[inner-1];
-            inner--;
+    for(let i = 1; i < array.length - 1; i++){
+        let temp = array[i];
+        let j = i;
+        //将比当前元素大的元素向后移一位
+        while(j > 0 && (array[j-1] >= temp)){
+            array[j] = array[j-1];
+            j--;
         }
         //将当前元素插入到移出的空位
-        array[inner] = temp;
-        //count++;
-        //print("Step " + count + ": " + array);
+        array[j] = temp;
     }
 }
 
-//希尔排序
-//希尔排序基于插入排序，通过使用不同的间隔来提高效率
-function shellSort(array, gap){
-    var count = 0;
-    for(var g=0; g<gap.length; g++){
-        //print("The gap is: " + gap[g]);
-        for(var outer=gap[g]; outer<array.length; outer++){
-            var temp = array[outer],
-                inner = outer;
-            while(inner>=gap[g] && (array[inner-gap[g]])>temp){
-                array[inner] = array[inner-gap[g]];
-                inner -= gap[g];
+// 希尔排序，时间复杂度为O(nlogn)，最好为O(n)
+// 希尔排序基于插入排序，通过使用不同的间隔来提高效率
+// 希尔排序的关键在于gap序列的选择：https://zh.wikipedia.org/wiki/%E5%B8%8C%E5%B0%94%E6%8E%92%E5%BA%8F
+function shellSort(array){
+    const length = array.length;
+    let gap = Math.floor(length / 2);
+    for(gap; gap > 0; gap = Math.floor(gap / 2)) {
+        // 从数组第gap个元素开始分组比较
+        for(let i = gap; i < length; i++) {
+            let temp = array[i];
+            let k = i - gap;
+            // 每个元素与自己组内的数据进行插入排序
+            while(k >= 0 && array[k] > temp) {
+                array[k + gap] = array[k];
+                k -= gap;
             }
-            array[inner] = temp;
-            //count++;
-            //print("Step " + count + ": " + array);
+            array[k + gap] = temp;
         }
     }
 }
+
+// 归并排序
+// to be done
 
 //快速排序
 function quickSort(array){
@@ -89,54 +97,46 @@ function quickSort(array){
     return quickSort(left).concat(pivot, quickSort(right));
 }
 
-var numElements = 1000000;
-var mynums = new CArray(numElements);
-mynums.setData();
-var nums1 = [],
-    nums2 = [];
-for(var i=0; i<mynums.data.length; i++){
-    nums1[i] = mynums.data[i];
-}
-for(var j=0; j<mynums.data.length; j++){
-    nums2[j] = mynums.data[j];
-}
+const SIZE = 10000;
+let mynums = (new Array(SIZE)).fill(0).map(() => {
+    return Math.floor((Math.random()) * SIZE);
+});
+
 // Test cases for basic sorting algorithm
-//print("Original array: " + mynums.toString());
-//var start = new Date().getTime();
-//bubbleSort(mynums.data);
-//var stop = new Date().getTime();
-//var time = stop - start;
-//print("Sorted by bubble algorithm:");
-//print("Time used: " + time)
-//print(mynums.toString());
-/*
+let array1 = [...mynums];
+let start = new Date().getTime();
+bubbleSort(array1);
+let stop = new Date().getTime();
+print("Sorted by bubble algorithm:");
+print("Time used: " + (stop - start));
+
+let array2 = [...mynums];
 start = new Date().getTime();
-selectionSort(nums1);
-var stop = new Date().getTime();
-var time = stop - start;
+selectionSort(array2);
+stop = new Date().getTime();
 print("Sorted by selection algorithm:");
-print("Time used: " + time)
-//print(mynums.toString());
+print("Time used: " + (stop - start));
+
+let array3 = [...mynums];
 start = new Date().getTime();
-insertionSort(nums2);
+insertionSort(array3);
 stop = new Date().getTime();
 time = stop - start;
 print("Sorted by insertion algorithm:");
-print("Time used: " + time)
-//print(mynums.toString());*/
+print("Time used: " + (stop - start));
 
-// Test cases for advanced sorting algorithm
-var gap = [701,301,132,57,23,10,4,1];
+let array4 = [...mynums];
 start = new Date().getTime()
-shellSort(nums1, gap);
+shellSort(array4);
 stop = new Date().getTime();
 time = stop - start;
 print("Sorted by shellSort algorithm:");
-print("Time used: " + time)
-start = new Date().getTime()
-var res = quickSort(nums2);
-stop = new Date().getTime();
-time = stop - start;
-print("Sorted by quickSort algorithm:");
-print("Time used: " + time)
+print("Time used: " + (stop - start));
+
+// start = new Date().getTime()
+// var res = quickSort(nums2);
+// stop = new Date().getTime();
+// time = stop - start;
+// print("Sorted by quickSort algorithm:");
+// print("Time used: " + time)
 //print(res);
