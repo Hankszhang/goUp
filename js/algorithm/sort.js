@@ -25,7 +25,8 @@ function bubbleSort(array) {
     }
 }
 
-//选择排序，时间复杂度为O(n^2)
+// 选择排序，时间复杂度为O(n^2)
+// 从头开始依次将后面的最小元素与当前元素互换
 function selectionSort(array){
     for(let i = 0; i < array.length - 1; i++){
         let min = i;
@@ -40,7 +41,8 @@ function selectionSort(array){
     }
 }
 
-//插入排序，时间复杂度为O(n^2)，最好为O(n)
+// 插入排序，时间复杂度为O(n^2)，最好为O(n)
+// 假定第i项之前已经排好序，将第i+1项插入到已经排好序的数组中的合适位置
 function insertionSort(array){
     for(let i = 1; i < array.length - 1; i++){
         let temp = array[i];
@@ -76,10 +78,36 @@ function shellSort(array){
     }
 }
 
-// 归并排序
-// to be done
+// 归并排序，时间复杂度为O(nlogn)
+// 分而治之的思想
+function mergeSort(array) {
+    const LEN = array.length;
+    if (LEN === 1) {
+        return array;
+    }
+
+    let mid = Math.floor(LEN / 2);
+    let left = array.slice(0, mid);
+    let right = array.slice(mid, LEN);
+    return merge(mergeSort(left), mergeSort(right));
+}
+
+function merge(left, right) {
+    let ret = [];
+    // 将小数组按照大小合并
+    while (left.length && right.length) {
+        if (left[0] < right[0]) {
+            ret.push(left.shift());
+        }
+        else {
+            ret.push(right.shift());
+        }
+    }
+    return ret.concat(left, right);
+}
 
 // 快速排序，时间复杂度为O(nlogn)
+// 分而治之的思想
 function quickSort(array){
     if (array.length == 0) {
         return [];
@@ -97,7 +125,7 @@ function quickSort(array){
     return quickSort(left).concat(pivot, quickSort(right));
 }
 
-// 快速排序，原地分区版本
+// 快速排序，原地分区版本，减小空间复杂度
 function qSort(array) {
     function partition(array, left, right) {
         // index代表下一个可能要交换的位置
@@ -116,17 +144,15 @@ function qSort(array) {
         return index;
     }
 
-    function sort(array, left, right) {
-        if (left > right) {
-            return;
+    function quick(array, left, right) {
+        if (left < right) {
+            let index = partition(array, left, right);
+            quick(array, left, index - 1);
+            quick(array, index + 1, right);
         }
-
-        let index = partition(array, left, right);
-        sort(array, left, index - 1);
-        sort(array, index - 1, right);
     }
 
-    sort(array, 0, array.length - 1);
+    quick(array, 0, array.length - 1);
     return array;
 }
 
@@ -166,10 +192,16 @@ time = stop - start;
 print("Sorted by shellSort algorithm:");
 print("Time used: " + (stop - start));
 
-// start = new Date().getTime()
-// var res = quickSort(nums2);
-// stop = new Date().getTime();
-// time = stop - start;
-// print("Sorted by quickSort algorithm:");
-// print("Time used: " + time)
-//print(res);
+let array5 = [...mynums];
+start = new Date().getTime()
+mergeSort(array5);
+stop = new Date().getTime();
+print("Sorted by mergeSort algorithm:");
+print("Time used: " + (stop - start));
+
+let array6 = [...mynums];
+start = new Date().getTime()
+qSort(array6);
+stop = new Date().getTime();
+print("Sorted by quickSort algorithm:");
+print("Time used: " + (stop - start));
