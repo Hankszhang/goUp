@@ -79,7 +79,7 @@ function shellSort(array){
 // 归并排序
 // to be done
 
-//快速排序
+// 快速排序，时间复杂度为O(nlogn)
 function quickSort(array){
     if (array.length == 0) {
         return [];
@@ -95,6 +95,39 @@ function quickSort(array){
         }
     }
     return quickSort(left).concat(pivot, quickSort(right));
+}
+
+// 快速排序，原地分区版本
+function qSort(array) {
+    function partition(array, left, right) {
+        // index代表下一个可能要交换的位置
+        let index = left;
+        // 选择最右边的元素为基准元素
+        let pivot = array[right];
+        for (let i = left; i < right; i++) {
+            if (array[i] < pivot) {
+                index !== i && swap(array, index, i);
+                // 交换位置后，index加1，代表下一个可能要交换的位置
+                index++;
+            }
+        }
+        // 将基准元素放置到最后的正确位置上
+        swap(array, right, index);
+        return index;
+    }
+
+    function sort(array, left, right) {
+        if (left > right) {
+            return;
+        }
+
+        let index = partition(array, left, right);
+        sort(array, left, index - 1);
+        sort(array, index - 1, right);
+    }
+
+    sort(array, 0, array.length - 1);
+    return array;
 }
 
 const SIZE = 10000;
