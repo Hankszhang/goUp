@@ -3,16 +3,10 @@
 // Author: Hanks
 
 // Define the Node object
-function Node(data, left, right){
-    this.data = data;
-    this.left = left;
-    this.right = right;
-    this.show = show;
-}
-
-// show the key-value of the node
-function show(){
-    return this.data;
+function Node(key){
+    this.key = key;
+    this.left = null;
+    this.right = null;
 }
 
 // Define the BST constructor
@@ -33,26 +27,31 @@ function BST(){
     this.removeNode = removeNode;
 }
 
-function insert(data){
-    var node = new Node(data, null, null);
-    if(this.root == null){
-        this.root = node;
-    }else{
-        var currNode = this.root;
-        while(true){
-            if(data < currNode.data){
-                if(currNode.left == null){
-                    currNode.left = node; //将待插入节点插入到当前节点的左节点
-                    break;
-                }
-                currNode = currNode.left;
-            }else{
-                if(currNode.right == null){
-                    currNode.right = node;
-                    break;
-                }
-                currNode = currNode.right;
-            }
+function insert(key){
+    let newNode = new Node(key);
+    if (this.root === null) {
+        this.root = newNode;
+    }
+    else {
+        insertNode(this.root, newNode);
+    }
+}
+
+function insertNode(node, newNode) {
+    if (newNode.key < node.key) {
+        if (node.left === null) {
+            node.left = newNode;
+        }
+        else {
+            insertNode(node.left, newNode);
+        }
+    }
+    else {
+        if (node.right === null) {
+            node.right = newNode;
+        }
+        else {
+            insertNode(node.right, newNode);
         }
     }
 }
@@ -61,14 +60,14 @@ function insert(data){
 function inOrder(node){
     if(node !== null){
         inOrder(node.left);
-        putstr(node.show() + " ");
+        console.log(node.key);
         inOrder(node.right);
     }
 }
 //先序遍历
 function preOrder(node){
     if(node !== null){
-        putstr(node.show() + " ");
+        console.log(node.key);
         preOrder(node.left);
         preOrder(node.right);
     }
@@ -78,108 +77,134 @@ function postOrder(node){
     if(node !== null){
         postOrder(node.left);
         postOrder(node.right);
-        putstr(node.show() + " ");
+        console.log(node.key);
     }
 }
 
 function getMin(){
     var currNode = this.root;
-    while(currNode.left !== null){
-        currNode = currNode.left;
+    if (currNode) {
+        while(currNode.left !== null){
+            currNode = currNode.left;
+        }
+        return currNode.key;
     }
-    return currNode.data;
+    return null;
 }
 
 function getMax(){
     var currNode = this.root;
-    while(currNode.right !== null){
-        currNode = currNode.right;
+    if (currNode) {
+        while(currNode.right !== null){
+            currNode = currNode.right;
+        }
+        return currNode.key;
     }
-    return currNode.data;
+    return null;
 }
 //获得节点个数
 //节点个数=左子树节点个数+右子树节点个数+根节点个数
 function getSize(node){
-    if(node == null){
+    if(node === null){
         return 0;
-    } else{
-        return getSize(node.left)+getSize(node.right)+1;
     }
+    return getSize(node.left) + getSize(node.right) + 1;
 }
 //获得叶子节点的个数
 //没有子节点的节点即为叶子节点
 function getLeapNodeSize(node){
-    if(node == null){
+    if (node === null){
         return 0;
-    } else if(node.left == null && node.right == null){
-        return 1;
-    } else{
-        return getLeapNodeSize(node.left) + getLeapNodeSize(node.right);
     }
+    if (node.left === null && node.right === null){
+        return 1;
+    }
+    return getLeapNodeSize(node.left) + getLeapNodeSize(node.right);
 }
+
 //获得边长的个数
-//边数 = 节点数-1
+//边数 = 节点数 - 1
 function getSides(node){
     return getSize(node) - 1;
 }
+
 //获得BST的深度
 //树的深度为其左/右子树深度的较大值加1
 function getLevel(node){
-    if(node == null) return 0;
+    if (node === null) {
+        return 0;
+    }
     var ll = getLevel(node.left);
     var rl = getLevel(node.right);
-    return ll>=rl ? ll+1: rl+1;
+    return (ll >= rl ? ll : rl) + 1;
 }
 
 //查找给定值
-function find(data){
-    var currNode = this.root;
-    while(currNode !== null){
-        if(currNode.data == data){
-            return currNode;
-        } else if(data < currNode.data){
-            currNode = currNode.left;
-        } else{
-            currNode = currNode.right;
-        }
-    }
-    return null;
+function find(key){
+    return findNode(this.root, key);
 }
+
+function findNode(node, key) {
+    if (node === null) {
+        return null;
+    }
+    if (key < node.key) {
+        return findNode(node.left, key);
+    }
+    if (key > node.key) {
+        return findNode(node.right, key);
+    }
+    return node;
+}
+
 //获取某个子树的最小值所在的节点
 function getSmallest(node) {
-    if (node.left == null) {
+    if (node.left === null) {
         return node;
-    }else {
-        return getSmallest(node.left);
     }
+    return getSmallest(node.left);
 }
+
 //删除给定的节点
-function remove(data){
-    this.root = removeNode(this.root, data);
+function remove(key){
+    this.root = removeNode(this.root, key);
 }
-function removeNode(node, data){
-    if(node == null) return null;
-    if(data == node.data){
-        //没有子节点的节点
-        if(node.left == null && node.right == null) return node.right;
-        //没有左子节点的节点
-        if(node.left == null) return node.right;
-        //没有右子节点的节点
-        if(node.right == null) return node.left;
-        //有两个子节点的节点
-        //替换被删除节点的值应为待删除节点的左子树上的最大值
-        //或者右子树上的最小值,这里选择后者
-        var tempNode = getSmallest(node.right);
-        node.data = tempNode.data;
-        node.right = removeNode(node.right, tempNode.data);
-        return node;
-    }else if(data < node.data){
-        node.left = removeNode(node.left, data);
-        return node;
-    }else{
-        node.right = removeNode(node.right, data);
+function removeNode(node, key){
+    if (node === null) {
+        return null;
+    }
+    if (key > node.key) {
+        node.right = removeNode(node.right, key);
         return node;
     }
+    if (key < node.key) {
+        node.left = removeNode(node.left, key);
+        return node;
+    }
+
+    // key === node.key的情况
+    //没有子节点的节点
+    if (node.left === null && node.right === null) {
+        node = null;
+        return node;
+    };
+    //没有左子节点的节点
+    if (node.left === null) {
+        node = node.right;
+        return node;
+    }
+    //没有右子节点的节点
+    if (node.right === null) {
+        node = node.left;
+        return node;
+    }
+    // 有两个子节点的节点
+    // 用右侧子树中最小节点的键去更新节点的值
+    var tempNode = getSmallest(node.right);
+    node.key = tempNode.key;
+    // 把右侧子树中的最小节点移除
+    node.right = removeNode(node.right, tempNode.key);
+    return node;
 }
 
 // test cases
@@ -216,7 +241,7 @@ print("The level of BST: " + level)
 //var max = nums.getMax();
 //print("The maximum value of the BST is: " + max);
 //
-//putstr("Enter a value to search for: ");
+//console.log("Enter a value to search for: ");
 //var value = parseInt(readline());
 //var found = nums.find(value);
 //if (found != null) {
@@ -227,7 +252,7 @@ print("The level of BST: " + level)
 //}
 //
 
-//putstr("Enter a value to remove: ");
+//console.log("Enter a value to remove: ");
 //var value = parseInt(readline());
 //nums.remove(value);
 //inOrder(nums.root);
