@@ -35,7 +35,7 @@ function selectionSort(array){
                 min = j;
             }
         }
-        if (array[i] !== array[min]) {
+        if (array[i] > array[min]) {
             swap(array, i, min);
         }
     }
